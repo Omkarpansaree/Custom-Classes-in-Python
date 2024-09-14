@@ -1,0 +1,20 @@
+
+# signals.py
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import User
+import time
+
+@receiver(post_save, sender=User)
+def my_handler(sender, instance, **kwargs):
+    print("Signal received!")
+    time.sleep(5)  # Simulate a delay
+    print("Signal handler finished executing")
+
+# In your view or shell
+from django.contrib.auth.models import User
+
+# Trigger signal by saving a new user
+user = User.objects.create(username='test_user')
+
+print("User created")
